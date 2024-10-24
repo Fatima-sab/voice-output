@@ -1,4 +1,4 @@
-limport streamlit as st
+import streamlit as st
 from gtts import gTTS
 import os
 
@@ -6,7 +6,7 @@ import os
 st.title("Text to Speech Converter")
 
 # Text input from the user
-user_input = st.text_input("hello google:")
+user_input = st.text_input("Enter the text you want to convert to speech:")
 
 # Button to convert text to audio
 if st.button("Convert to Audio"):
@@ -17,6 +17,16 @@ if st.button("Convert to Audio"):
         tts.save(audio_file)
 
         # Provide a download link for the audio file
-        st.audio(audio_file, format="audio/mp3")
+        st.success("Audio has been generated! You can download it below:")
+        
+        # Allow the user to download the audio file
+        with open(audio_file, "rb") as file:
+            btn = st.download_button(
+                label="Download Audio",
+                data=file,
+                file_name=audio_file,
+                mime="audio/mp3"
+            )
     else:
         st.warning("Please enter some text before converting.")
+
